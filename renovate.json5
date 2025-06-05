@@ -1,63 +1,49 @@
-// SPDX-FileCopyrightText: Copyright (C) 2025 Opal Health Informatics Group <https://www.opalmedapps.com>
-//
-// SPDX-License-Identifier: MIT
-
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    // https://docs.renovatebot.com/presets-default/#separatemultiplemajorreleases
-    ":separateMultipleMajorReleases",
-    // https://docs.renovatebot.com/presets-default/#separatepatchreleases
-    ":separatePatchReleases",
-    // set timezone to local one to ensure schedules are run
-    // https://docs.renovatebot.com/configuration-options/#timezone
-    ":timezone(America/Toronto)",
-    // enable updates for pre-commit
-    // see: https://docs.renovatebot.com/modules/manager/pre-commit/
-    // https://docs.renovatebot.com/presets-default/#enableprecommit
-    ":enablePreCommit",
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
+    ':separateMultipleMajorReleases',
+    ':separatePatchReleases',
+    ':timezone(America/Toronto)',
+    ':enablePreCommit',
   ],
-  // https://docs.renovatebot.com/configuration-options/#assignees
-  "assignees": ["mschoettle"],
-  // https://docs.renovatebot.com/configuration-options/#labels
-  "labels": ["dependencies"],
-  // Only rebase existing MRs when the branch is conflicted
-  // This avoids getting spammed by updates to existing PRs
-  //
-  // https://docs.renovatebot.com/configuration-options/#rebasewhen
-  "rebaseWhen": "conflicted",
-  // https://docs.renovatebot.com/configuration-options/#packagerules
-  "packageRules": [
-    // Combine markdownlint-cli2 updates
+  assignees: [
+    'mschoettle',
+  ],
+  labels: [
+    'dependencies',
+  ],
+  rebaseWhen: 'conflicted',
+  packageRules: [
     {
-      "matchPackageNames": ["/markdownlint-cli2/"],
-      "groupName": "markdownlint-cli2",
+      matchPackageNames: [
+        '/markdownlint-cli2/',
+      ],
+      groupName: 'markdownlint-cli2',
     },
-    // Reduce noise of some pre-commit hooks
     {
-      "matchPackageNames": [
-        "/typos$/",
-        "/zizmor-pre-commit$/",
-        "/check-jsonschema$/",
+      matchPackageNames: [
+        '/typos$/',
+        '/zizmor-pre-commit$/',
+        '/check-jsonschema$/',
       ],
-      "groupName": "pre-commit hooks",
-      // Restrict to weekly updates
-      "schedule": [
-        "before 12pm on Monday",
+      groupName: 'pre-commit hooks',
+      schedule: [
+        'before 12pm on Monday',
       ],
-    }
+    },
   ],
-  // add custom manager for pinning version in GitHub action docker-run specifying a container image
-  "customManagers": [
+  customManagers: [
     {
-      "customType": "regex",
-      "fileMatch": ["^.github/workflows/[^/]*\\.ya?ml$"],
-      "matchStrings": [
-        "(?:image:\\s*)(?<depName>[\\S]+?):(?<currentValue>[^@\\s]+)(?:@(?<currentDigest>sha256:[a-f0-9]+))?",
+      customType: 'regex',
+      managerFilePatterns: [
+        '/^.github/workflows/[^/]*\\.ya?ml$/',
       ],
-      "datasourceTemplate": "docker",
-      "versioningTemplate": "docker",
-    }
+      matchStrings: [
+        '(?:image:\\s*)(?<depName>[\\S]+?):(?<currentValue>[^@\\s]+)(?:@(?<currentDigest>sha256:[a-f0-9]+))?',
+      ],
+      datasourceTemplate: 'docker',
+      versioningTemplate: 'docker',
+    },
   ],
 }
