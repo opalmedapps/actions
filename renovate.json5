@@ -52,7 +52,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["^.github/workflows/[^/]*\\.ya?ml$"],
+      "managerFilePatterns": ["^.github/workflows/[^/]*\\.ya?ml$"],
       "matchStrings": [
         "(?:image:\\s*)(?<depName>[\\S]+?):(?<currentValue>[^@\\s]+)(?:@(?<currentDigest>sha256:[a-f0-9]+))?",
       ],
