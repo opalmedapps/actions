@@ -58,9 +58,9 @@ runs:
           exit 1;
         fi
       env:
-        PACKAGE_FILE: ${{ inputs.package-file }}"
-        COMPOSER_FILE: ${{ inputs.composer-file }}"
-        PIP_REQUIREMENTS_FILES: ${{ inputs.pip-requirements-files }}"
+        PACKAGE_FILE: ${{ inputs.package-file }}
+        COMPOSER_FILE: ${{ inputs.composer-file }}
+        PIP_REQUIREMENTS_FILES: ${{ inputs.pip-requirements-files }}
       shell: bash
 
     - name: Compose the arguments to the script
