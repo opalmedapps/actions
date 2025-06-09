@@ -6,7 +6,7 @@
 # I.e., each dependency has to have a corresponding heading in the notice.
 # Warns about dependencies missing as well as dependencies that are declared in addition.
 #
-# Note: Currently only supports npm and composer.
+# Note: Currently supports npm, composer and pip.
 
 name: Check Thirdparty Notice
 description: Ensures that declared project dependencies and the third-party notice in THIRDPARTY.md are in sync.
