@@ -40,8 +40,6 @@ runs:
     - name: Clone check_thirdparty_notice.py from the actions repo
       uses: actions/checkout@v4.2.2
       with:
-        # TODO testing
-        ref: SB.check-thirdparty-notice
         repository: opalmedapps/actions
         path: opalmedapps-actions
         # See: https://github.com/actions/checkout?tab=readme-ov-file#fetch-only-a-single-file
@@ -79,16 +77,6 @@ runs:
         COMPOSER: ${{ inputs.composer-file }}
         PIP_REQUIREMENTS: ${{ inputs.pip-requirements-files }}
         ADDITIONAL_DEPENDENCIES: ${{ inputs.additional-dependencies }}
-      shell: bash
-
-    # TODO testing
-    - name: ls local
-      run: ls -la
-      shell: bash
-
-    # TODO testing
-    - name: ls actions
-      run: ls -la opalmedapps-actions
       shell: bash
 
     - name: Call the check_thirdparty_notice script
