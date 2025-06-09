@@ -1,0 +1,96 @@
+# SPDX-FileCopyrightText: Copyright (C) 2025 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+#
+# SPDX-License-Identifier: TBD
+
+# Ensures that declared project dependencies and the third-party notice in THIRDPARTY.md are in sync.
+# I.e., each dependency has to have a corresponding heading in the notice.
+# Warns about dependencies missing as well as dependencies that are declared in addition.
+#
+# Note: Currently only supports npm and composer.
+
+name: Check Thirdparty Notice
+description: Ensures that declared project dependencies and the third-party notice in THIRDPARTY.md are in sync.
+
+inputs:
+  package-file:
+    description: The filename of an npm package.json file (can be relative to the current working directory)
+    default: ""
+  composer-file:
+    description: The filename of a composer.json file (can be relative to the current working directory)
+    default: ""
+  pip-requirements-files:
+    description: |
+      The filename(s) of a requirements file (can be relative to the current working directory).
+      If specifying more than one file, separate with spaces.
+    default: ""
+  additional-dependencies:
+    description: |
+      Additional dependencies that are allowed to be listed in the third-party notice.
+      If specifying more than one package, separate with spaces.
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    # Setup
+    - name: Clone the caller's repo to access dependency files and the third-party notice
+      uses: actions/checkout@v4.2.2
+      with:
+        persist-credentials: false
+    - name: Clone check_thirdparty_notice.py from the actions repo
+      uses: actions/checkout@v4.2.2
+      with:
+        # TODO testing
+        ref: SB.check-thirdparty-notice
+        repository: opalmedapps/actions
+        path: opalmedapps-actions
+        # See: https://github.com/actions/checkout?tab=readme-ov-file#fetch-only-a-single-file
+        sparse-checkout: |
+          actions/check-thirdparty-notice/check_thirdparty_notice.py
+        sparse-checkout-cone-mode: false
+        persist-credentials: false
+    - name: Install uv
+      uses: astral-sh/setup-uv@v6.1.0
+    - name: Make sure a dependencies file path was provided
+      run: |
+        if [[ -z "PACKAGE_FILE" ]] \
+        && [[ -z "COMPOSER_FILE" ]] \
+        && [[ -z "PIP_REQUIREMENTS_FILES" ]]; then
+          echo "At least one of the inputs package-file, composer-file or pip-requirements-files must be provided";
+          false;
+        fi
+      env:
+        PACKAGE_FILE: ${{ inputs.package-file }}"
+        COMPOSER_FILE: ${{ inputs.composer-file }}"
+        PIP_REQUIREMENTS_FILES: ${{ inputs.pip-requirements-files }}"
+      shell: bash
+
+    - name: Compose the arguments to the script
+      run: | # zizmor: ignore[github-env]
+        ARGS=
+        ARGS=${ARGS}${NPM:+ --npm $NPM}
+        ARGS=${ARGS}${COMPOSER:+ --composer $COMPOSER}
+        ARGS=${ARGS}${PIP_REQUIREMENTS:+ --pip $PIP_REQUIREMENTS}
+        ARGS=${ARGS}${ADDITIONAL_DEPENDENCIES:+ --additional-dependencies $ADDITIONAL_DEPENDENCIES}
+        echo "Arguments are: $ARGS"
+        echo ARGS="$ARGS" >> "$GITHUB_ENV"
+      env:
+        NPM: ${{ inputs.package-file }}
+        COMPOSER: ${{ inputs.composer-file }}
+        PIP_REQUIREMENTS: ${{ inputs.pip-requirements-files }}
+        ADDITIONAL_DEPENDENCIES: ${{ inputs.additional-dependencies }}
+      shell: bash
+
+    # TODO testing
+    - name: ls local
+      run: ls -la
+      shell: bash
+
+    # TODO testing
+    - name: ls actions
+      run: ls -la opalmedapps-actions
+      shell: bash
+
+    - name: Call the check_thirdparty_notice script
+      run: uv run opalmedapps-actions/actions/check-thirdparty-notice/check_thirdparty_notice.py $ARGS
+      shell: bash
