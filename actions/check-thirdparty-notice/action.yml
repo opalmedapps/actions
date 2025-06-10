@@ -39,9 +39,7 @@ runs:
         persist-credentials: false
     # Add the action's path to the runner system path (to locate the check_thirdparty_notice.py script during execution)
     - name: Modify the path to access check_thirdparty_notice.py
-      run: |
-        echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
-        chmod +x "$GITHUB_ACTION_PATH/check_thirdparty_notice.py"
+      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
       shell: bash
       env:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
