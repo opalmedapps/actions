@@ -33,10 +33,6 @@ runs:
   using: "composite"
   steps:
     # Setup
-    - name: Clone the caller's repo to access dependency files and the third-party notice
-      uses: actions/checkout@v4.2.2
-      with:
-        persist-credentials: false
     # Copy check_thirdparty_notice.py from the action path to the current directory, so it can see all relevant files
     - name: Copy check_thirdparty_notice.py to the current directory
       run: cp "$GITHUB_ACTION_PATH/check_thirdparty_notice.py" .
