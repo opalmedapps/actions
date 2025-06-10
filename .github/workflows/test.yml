@@ -37,3 +37,38 @@ jobs:
           package-file: package.json
           composer-file: composer.json
           pip-requirements-files: requirements.txt requirements2.txt
+
+  check-thirdparty-notice-test2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
+
+      # Initialize test data
+      - run: |
+          cp actions/check-thirdparty-notice/tests/* .
+          mv THIRDPARTY_pip.md THIRDPARTY.md
+
+      # Run the check-thirdparty-notice action on the test data
+      - uses: ./actions/check-thirdparty-notice
+        with:
+          pip-requirements-files: requirements.txt
+
+  check-thirdparty-notice-test3:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
+
+      # Initialize test data
+      - run: |
+          cp actions/check-thirdparty-notice/tests/* .
+          mv THIRDPARTY_additional.md THIRDPARTY.md
+
+      # Run the check-thirdparty-notice action on the test data
+      - uses: ./actions/check-thirdparty-notice
+        with:
+          pip-requirements-files: requirements.txt
+          additional-dependencies: additional-non-package-manager-package additional-non-package-manager-package2
