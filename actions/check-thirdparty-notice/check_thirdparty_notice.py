@@ -1,6 +1,6 @@
-# SPDX-FileCopyrightText: Copyright (C) 2025 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+# SPDX-FileCopyrightText: Copyright (C) 2025 Opal Health Informatics Group <https://www.opalmedapps.com>
 #
-# SPDX-License-Identifier: TBD
+# SPDX-License-Identifier: MIT
 
 # TODO: let Renovate update these dependencies somehow
 # /// script

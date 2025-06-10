@@ -1,6 +1,6 @@
-# SPDX-FileCopyrightText: Copyright (C) 2025 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+# SPDX-FileCopyrightText: Copyright (C) 2025 Opal Health Informatics Group <https://www.opalmedapps.com>
 #
-# SPDX-License-Identifier: TBD
+# SPDX-License-Identifier: MIT
 
 # Ensures that declared project dependencies and the third-party notice in THIRDPARTY.md are in sync.
 # I.e., each dependency has to have a corresponding heading in the notice.
