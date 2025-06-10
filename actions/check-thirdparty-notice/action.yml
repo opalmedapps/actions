@@ -37,21 +37,21 @@ runs:
       uses: actions/checkout@v4.2.2
       with:
         persist-credentials: false
-    # Add the action's path to the runner system path (to locate the check_thirdparty_notice.py script during execution)
-    - name: Modify the path to access check_thirdparty_notice.py
-      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
-      shell: bash
-      env:
-        GITHUB_ACTION_PATH: ${{ github.action_path }}
+#    # Add the action's path to the runner system path (to locate the check_thirdparty_notice.py script during execution)
+#    - name: Modify the path to access check_thirdparty_notice.py
+#      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+#      shell: bash
+#      env:
+#        GITHUB_ACTION_PATH: ${{ github.action_path }}
+    - name: Install uv
+      uses: astral-sh/setup-uv@v6.1.0
+      with:
+        working-directory: ${{ github.action_path }}
     # TODO debug
     - run: ls -la "$GITHUB_ACTION_PATH"
       shell: bash
       env:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
-    - name: Install uv
-      uses: astral-sh/setup-uv@v6.1.0
-      with:
-        working-directory: ${{ github.action_path }}
     - name: Make sure a dependencies file path was provided
       run: |
         if [[ -z "$PACKAGE_FILE" ]] \
@@ -85,3 +85,4 @@ runs:
     - name: Call the check_thirdparty_notice script
       run: uv run check_thirdparty_notice.py $ARGS
       shell: bash
+      working-directory: ${{ github.action_path }}
