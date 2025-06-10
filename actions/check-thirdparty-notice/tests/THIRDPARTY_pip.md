@@ -4,4 +4,4 @@ This is a test file and just lists expected package names without any actual con
 
 ## fake-python-package
 
-* Repository: unknown
+- Repository: unknown

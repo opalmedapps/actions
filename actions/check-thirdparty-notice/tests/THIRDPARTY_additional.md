@@ -4,12 +4,12 @@ This is a test file and just lists expected package names without any actual con
 
 ## fake-python-package
 
-* Repository: unknown
+- Repository: unknown
 
 ## additional-non-package-manager-package
 
-* Repository: unknown
+- Repository: unknown
 
 ## additional-non-package-manager-package2
 
-* Repository: unknown
+- Repository: unknown
