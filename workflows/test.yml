@@ -1,0 +1,39 @@
+# SPDX-FileCopyrightText: Copyright (C) 2025 Opal Health Informatics Group <https://www.opalmedapps.com>
+#
+# SPDX-License-Identifier: MIT
+
+name: test
+description: Tests the actions in this repository.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+concurrency:
+  group: ${{ github.ref }}$-{{ github.workflow }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check-thirdparty-notice-test1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
+
+      # Initialize test data
+      - run: cp THIRDPARTY_all.md THIRDPARTY.md
+        working-directory: actions/check-thirdparty-notice/tests
+
+      # Run the check-thirdparty-notice action on the test data
+      - uses: ./actions/check-thirdparty-notice
+        working-directory: actions/check-thirdparty-notice/tests
+        with:
+          package-file: package.json
+          composer-file: composer.json
+          pip-requirements-files: requirements.txt requirements2.txt
