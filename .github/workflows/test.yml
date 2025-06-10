@@ -27,12 +27,12 @@ jobs:
           persist-credentials: false
 
       # Initialize test data
-      - run: cp THIRDPARTY_all.md THIRDPARTY.md
-        working-directory: actions/check-thirdparty-notice/tests
+      - run: |
+          cp actions/check-thirdparty-notice/tests/* .
+          mv THIRDPARTY_all.md THIRDPARTY.md
 
       # Run the check-thirdparty-notice action on the test data
       - uses: ./actions/check-thirdparty-notice
-        working-directory: actions/check-thirdparty-notice/tests
         with:
           package-file: package.json
           composer-file: composer.json
