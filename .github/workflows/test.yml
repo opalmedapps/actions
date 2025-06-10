@@ -31,6 +31,9 @@ jobs:
           cp actions/check-thirdparty-notice/tests/* .
           mv THIRDPARTY_all.md THIRDPARTY.md
 
+      # TODO testing
+      - run: ls -la
+
       # Run the check-thirdparty-notice action on the test data
       - uses: ./actions/check-thirdparty-notice
         with:
