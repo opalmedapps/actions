@@ -37,16 +37,12 @@ runs:
       uses: actions/checkout@v4.2.2
       with:
         persist-credentials: false
-    - name: Clone check_thirdparty_notice.py from the actions repo
-      uses: actions/checkout@v4.2.2
-      with:
-        repository: opalmedapps/actions
-        path: opalmedapps-actions
-        # See: https://github.com/actions/checkout?tab=readme-ov-file#fetch-only-a-single-file
-        sparse-checkout: |
-          actions/check-thirdparty-notice/check_thirdparty_notice.py
-        sparse-checkout-cone-mode: false
-        persist-credentials: false
+    # Add the action's path to the runner system path (to locate the check_thirdparty_notice.py script during execution)
+    - name: Modify the path to access check_thirdparty_notice.py
+      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+      shell: bash
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
     - name: Install uv
       uses: astral-sh/setup-uv@v6.1.0
     - name: Make sure a dependencies file path was provided
@@ -80,5 +76,5 @@ runs:
       shell: bash
 
     - name: Call the check_thirdparty_notice script
-      run: uv run opalmedapps-actions/actions/check-thirdparty-notice/check_thirdparty_notice.py $ARGS
+      run: uv run check_thirdparty_notice.py $ARGS
       shell: bash
