@@ -3,6 +3,7 @@ version = 1
 [[annotations]]
 path = [
     ".vscode/extensions.json",
+    "actions/check-thirdparty-notice/tests/*",
 ]
 precedence = "override"
 SPDX-FileCopyrightText = "Copyright (C) 2025 Opal Health Informatics Group <https://www.opalmedapps.com>"

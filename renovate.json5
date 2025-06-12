@@ -48,6 +48,12 @@
       ],
     }
   ],
+  // No files are matched by default, see: https://docs.renovatebot.com/modules/manager/pep723/
+  "pep723": {
+    "managerFilePatterns": [
+      "/(^|/).+\\.py$/",
+    ],
+  },
   // add custom manager for pinning version in GitHub action docker-run specifying a container image
   "customManagers": [
     {

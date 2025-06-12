@@ -1,0 +1,7 @@
+{
+  "require": {
+    "fake-composer-dependency": "0.0.1",
+    "ext-redis": "*",
+    "php": "^8.3"
+  }
+}
