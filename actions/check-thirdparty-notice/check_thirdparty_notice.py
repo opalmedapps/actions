@@ -2,7 +2,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-# TODO: let Renovate update these dependencies somehow
 # /// script
 # requires-python = ">=3.9"
 # dependencies = [
