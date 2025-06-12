@@ -58,14 +58,15 @@ runs:
       uses: astral-sh/setup-uv@v6.1.0
 
     - name: Compose the arguments to the script
-      run: | # zizmor: ignore[github-env]
+      id: script-arguments
+      run: |
         ARGS=
         ARGS=${ARGS}${NPM:+ --npm $NPM}
         ARGS=${ARGS}${COMPOSER:+ --composer $COMPOSER}
         ARGS=${ARGS}${PIP_REQUIREMENTS:+ --pip $PIP_REQUIREMENTS}
         ARGS=${ARGS}${ADDITIONAL_DEPENDENCIES:+ --additional-dependencies $ADDITIONAL_DEPENDENCIES}
         echo "Arguments are: $ARGS"
-        echo ARGS="$ARGS" >> "$GITHUB_ENV"
+        echo ARGS="$ARGS" >> "$GITHUB_OUTPUT"
       env:
         NPM: ${{ inputs.package-file }}
         COMPOSER: ${{ inputs.composer-file }}
@@ -76,4 +77,6 @@ runs:
     # Run the thirdparty notice check
     - name: Call the check_thirdparty_notice script
       run: uv run check_thirdparty_notice.py $ARGS
+      env:
+        ARGS: ${{ steps.script-arguments.outputs.ARGS }}
       shell: bash
