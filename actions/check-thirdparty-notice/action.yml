@@ -32,15 +32,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # Setup
-    # Copy check_thirdparty_notice.py from the action path to the current directory, so it can see all relevant files
-    - name: Copy check_thirdparty_notice.py to the current directory
-      run: cp "$GITHUB_ACTION_PATH/check_thirdparty_notice.py" .
-      shell: bash
-      env:
-        GITHUB_ACTION_PATH: ${{ github.action_path }}
-    - name: Install uv
-      uses: astral-sh/setup-uv@v6.1.0
+    # Validate inputs
     - name: Make sure a dependencies file path was provided
       run: |
         if [[ -z "$PACKAGE_FILE" ]] \
@@ -54,6 +46,16 @@ runs:
         COMPOSER_FILE: ${{ inputs.composer-file }}
         PIP_REQUIREMENTS_FILES: ${{ inputs.pip-requirements-files }}
       shell: bash
+
+    # Setup
+    # Copy check_thirdparty_notice.py from the action path to the current directory, so it can see all relevant files
+    - name: Copy check_thirdparty_notice.py to the current directory
+      run: cp "$GITHUB_ACTION_PATH/check_thirdparty_notice.py" .
+      shell: bash
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
+    - name: Install uv
+      uses: astral-sh/setup-uv@v6.1.0
 
     - name: Compose the arguments to the script
       run: | # zizmor: ignore[github-env]
@@ -71,6 +73,7 @@ runs:
         ADDITIONAL_DEPENDENCIES: ${{ inputs.additional-dependencies }}
       shell: bash
 
+    # Run the thirdparty notice check
     - name: Call the check_thirdparty_notice script
       run: uv run check_thirdparty_notice.py $ARGS
       shell: bash
