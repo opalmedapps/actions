@@ -5,7 +5,7 @@
 # /// script
 # requires-python = ">=3.9"
 # dependencies = [
-#     "beautifulsoup4==4.13.4",
+#     "beautifulsoup4==4.13.5",
 #     "markdown==3.8.2",
 #     "pip-requirements-parser==32.0.1",
 # ]
