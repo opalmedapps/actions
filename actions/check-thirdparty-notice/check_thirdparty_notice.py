@@ -6,7 +6,7 @@
 # requires-python = ">=3.9"
 # dependencies = [
 #     "beautifulsoup4==4.13.5",
-#     "markdown==3.8.2",
+#     "markdown==3.9",
 #     "pip-requirements-parser==32.0.1",
 # ]
 # ///
