@@ -8,16 +8,19 @@
 #     "beautifulsoup4==4.13.5",
 #     "markdown==3.9",
 #     "pip-requirements-parser==32.0.1",
+#     "pyproject-metadata==0.9.1",
 # ]
 # ///
 import argparse
 import json
 import sys
+import tomllib
 from pathlib import Path
 
 import bs4
 import markdown
 from pip_requirements_parser import RequirementsFile
+from pyproject_metadata import StandardMetadata
 
 
 def valid_path(argument: str) -> Path:
@@ -40,6 +43,7 @@ def is_package_name(tag: bs4.Tag) -> bool:
 
 
 parser = argparse.ArgumentParser()
+parser.add_argument('--pyproject', metavar='pyproject-file', type=valid_path)
 parser.add_argument('--pip', metavar='requirements-file', type=valid_path, nargs='+')
 parser.add_argument('--npm', metavar='package-file', type=valid_path)
 parser.add_argument('--composer', metavar='composer-file', type=valid_path)
@@ -53,8 +57,8 @@ parser.add_argument(
 
 args = parser.parse_args(sys.argv[1:])
 
-if not (args.pip or args.npm or args.composer):
-    raise ValueError('One of --pip, --npm or --composer needs to be provided')
+if not (args.pyproject or args.pip or args.npm or args.composer):
+    raise ValueError('One of --pyproject, --pip, --npm or --composer needs to be provided')
 
 # determine all dependencies
 dependencies: set[str] = set()
@@ -91,6 +95,21 @@ if args.pip:
         for requirement in requirements.requirements:
             # some dependencies are capitalized: normalize their names
             dependencies.add(requirement.req.name.lower())
+
+if args.pyproject:
+    pyproject_file: Path = args.pyproject
+
+    with pyproject_file.open('rb') as f:
+        data = tomllib.load(f)
+
+    metadata = StandardMetadata.from_pyproject(data)
+
+    for dependency in metadata.dependencies:
+        dependencies.add(dependency.name.lower())
+
+    for optional_dependency in metadata.optional_dependencies.values():
+        for dependency in optional_dependency:
+            dependencies.add(dependency.name.lower())
 
 # parse third-party notice by converting it to HTML and reading the level 2 headings out
 with Path('THIRDPARTY.md').open() as fd:

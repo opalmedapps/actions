@@ -18,42 +18,38 @@ permissions:
   contents: read
 
 jobs:
+  # Test all dependency types
   check-thirdparty-notice-test1:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5.0.0
         with:
           persist-credentials: false
-
-      # Initialize test data
       - run: |
           cp actions/check-thirdparty-notice/tests/* .
           mv THIRDPARTY_all.md THIRDPARTY.md
-
-      # Run the check-thirdparty-notice action on the test data
       - uses: ./actions/check-thirdparty-notice
         with:
           package-file: package.json
           composer-file: composer.json
+          pyproject-file: pyproject.toml
           pip-requirements-files: requirements.txt requirements2.txt
 
+  # Test pip requirements with relative includes
   check-thirdparty-notice-test2:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5.0.0
         with:
           persist-credentials: false
-
-      # Initialize test data
       - run: |
           cp actions/check-thirdparty-notice/tests/* .
           mv THIRDPARTY_pip.md THIRDPARTY.md
-
-      # Run the check-thirdparty-notice action on the test data
       - uses: ./actions/check-thirdparty-notice
         with:
-          pip-requirements-files: requirements.txt
+          pip-requirements-files: requirements2.txt
 
+  # Test pip requirements with additional dependencies
   check-thirdparty-notice-test3:
     runs-on: ubuntu-latest
     steps:

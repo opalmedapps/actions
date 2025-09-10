@@ -21,3 +21,11 @@ This is a test file and just lists expected package names without any actual con
 ## pillow
 
 - Specified as Pillow in the requirements file
+
+## django
+
+- [Homepage](https://www.djangoproject.com)
+
+## djangorestframework
+
+- Specified as an optional dependency
