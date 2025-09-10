@@ -18,6 +18,9 @@ inputs:
   composer-file:
     description: The filename of a composer.json file (can be relative to the current working directory)
     default: ""
+  pyproject-file:
+    description: The filename of a Python pyproject.toml file (can be relative to the current working directory).
+    default: ""
   pip-requirements-files:
     description: |
       The filename(s) of a requirements file (can be relative to the current working directory).
@@ -36,14 +39,16 @@ runs:
     - name: Make sure a dependencies file path was provided
       run: |
         if [[ -z "$PACKAGE_FILE" ]] \
+        && [[ -z "$PYPROJECT_FILE" ]] \
         && [[ -z "$COMPOSER_FILE" ]] \
         && [[ -z "$PIP_REQUIREMENTS_FILES" ]]; then
-          echo "At least one of the inputs package-file, composer-file or pip-requirements-files must be provided";
+          echo "At least one of the inputs package-file, composer-file, pyproject-file or pip-requirements-files must be provided";
           exit 1;
         fi
       env:
         PACKAGE_FILE: ${{ inputs.package-file }}
         COMPOSER_FILE: ${{ inputs.composer-file }}
+        PYPROJECT_FILE: ${{ inputs.pyproject-file }}
         PIP_REQUIREMENTS_FILES: ${{ inputs.pip-requirements-files }}
       shell: bash
 
@@ -66,6 +71,7 @@ runs:
         ARGS=
         ARGS=${ARGS}${NPM:+ --npm $NPM}
         ARGS=${ARGS}${COMPOSER:+ --composer $COMPOSER}
+        ARGS=${ARGS}${PYPROJECT:+ --pyproject $PYPROJECT}
         ARGS=${ARGS}${PIP_REQUIREMENTS:+ --pip $PIP_REQUIREMENTS}
         ARGS=${ARGS}${ADDITIONAL_DEPENDENCIES:+ --additional-dependencies $ADDITIONAL_DEPENDENCIES}
         echo "Arguments are: $ARGS"
@@ -73,6 +79,7 @@ runs:
       env:
         NPM: ${{ inputs.package-file }}
         COMPOSER: ${{ inputs.composer-file }}
+        PYPROJECT: ${{ inputs.pyproject-file }}
         PIP_REQUIREMENTS: ${{ inputs.pip-requirements-files }}
         ADDITIONAL_DEPENDENCIES: ${{ inputs.additional-dependencies }}
       shell: bash
