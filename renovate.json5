@@ -35,19 +35,19 @@
       "matchPackageNames": ["/markdownlint-cli2/"],
       "groupName": "markdownlint-cli2",
     },
-    // Reduce noise of some pre-commit hooks
+    // Reduce noise of pre-commit hooks
     {
-      "matchPackageNames": [
-        "/typos$/",
-        "/zizmor-pre-commit$/",
-        "/check-jsonschema$/",
+      "matchManagers": [
+        "pre-commit",
       ],
       "groupName": "pre-commit hooks",
+      "separateMajorMinor": false,
+      "separateMinorPatch": false,
       // Restrict to weekly updates
       "schedule": [
         "before 12pm on Monday",
       ],
-    }
+    },
   ],
   // No files are matched by default, see: https://docs.renovatebot.com/modules/manager/pep723/
   "pep723": {
