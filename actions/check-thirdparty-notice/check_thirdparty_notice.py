@@ -8,7 +8,7 @@
 #     "beautifulsoup4==4.14.3",
 #     "markdown==3.10.1",
 #     "pip-requirements-parser==32.0.1",
-#     "pyproject-metadata==0.10.0",
+#     "pyproject-metadata==0.11.0",
 # ]
 # ///
 import argparse
