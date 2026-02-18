@@ -8,7 +8,7 @@ on:
   workflow_call:
     inputs:
       skip:
-        description: Comma-separated list of hooks to skip (SKIP env)
+        description: Comma-separated list of hooks to skip
         required: false
         type: string
         default: ""
