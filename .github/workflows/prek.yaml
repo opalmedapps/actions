@@ -4,18 +4,9 @@
 
 name: prek
 
-env:
-  # renovate: datasource=pypi depName=prek
-  PREK_VERSION: "0.3.1"
-
 on:
   workflow_call:
     inputs:
-      prek-version:
-        description: Version of prek to use
-        required: false
-        type: string
-        default: ""
       skip:
         description: Comma-separated list of hooks to skip (SKIP env)
         required: false
@@ -34,6 +25,7 @@ jobs:
           persist-credentials: false
       - uses: j178/prek-action@0bb87d7f00b0c99306c8bcb8b8beba1eb581c037 # v1.1.1
         with:
-          prek-version: ${{ inputs.prek-version || env.PREK_VERSION }}
+          # renovate: datasource=pypi depName=prek
+          prek-version: "0.3.1"
         env:
           SKIP: ${{ inputs.skip }}

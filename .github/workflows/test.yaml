@@ -67,3 +67,8 @@ jobs:
         with:
           pip-requirements-files: requirements.txt
           additional-dependencies: additional-non-package-manager-package additional-non-package-manager-package2
+
+  prek-skip:
+    uses: ./.github/workflows/prek.yaml
+    with:
+      skip: reuse-tool,actionlint
