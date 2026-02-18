@@ -71,4 +71,4 @@ jobs:
   prek-skip:
     uses: ./.github/workflows/prek.yaml
     with:
-      skip: reuse-tool,actionlint
+      skip: reuse-lint-file,actionlint
