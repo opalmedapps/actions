@@ -11,6 +11,10 @@
     // set timezone to local one to ensure schedules are run
     // https://docs.renovatebot.com/configuration-options/#timezone
     ":timezone(America/Toronto)",
+    // https://docs.renovatebot.com/presets-helpers/#helperspingithubactiondigeststosemver
+    "helpers:pinGitHubActionDigestsToSemver",
+    // https://docs.renovatebot.com/presets-customManagers/#custommanagersgithubactionsversions
+    "customManagers:githubActionsVersions",
     "github>mschoettle/renovate-presets//presets/pre-commit-hooks.json5",
   ],
   // https://docs.renovatebot.com/configuration-options/#assignees
