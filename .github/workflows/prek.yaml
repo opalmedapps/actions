@@ -18,6 +18,9 @@ permissions:
 
 jobs:
   prek:
+    env:
+      # renovate: datasource=pypi depName=prek
+      PREK_VERSION: "0.3.1"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -25,7 +28,6 @@ jobs:
           persist-credentials: false
       - uses: j178/prek-action@0bb87d7f00b0c99306c8bcb8b8beba1eb581c037 # v1.1.1
         with:
-          # renovate: datasource=pypi depName=prek
           prek-version: "0.3.1"
         env:
           SKIP: ${{ inputs.skip }}
