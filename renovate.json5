@@ -21,6 +21,11 @@
   "assignees": ["mschoettle"],
   // https://docs.renovatebot.com/configuration-options/#labels
   "labels": ["dependencies"],
+  // Add a dependency cooldown
+  // https://docs.renovatebot.com/key-concepts/minimum-release-age/#minimum-release-age
+  // https://blog.yossarian.net/2025/11/21/We-should-all-be-using-dependency-cooldowns
+  "minimumReleaseAge": "7 days",
+  "internalChecksFilter": "strict",
   // Only rebase existing MRs when the branch is conflicted
   // This avoids getting spammed by updates to existing PRs
   //
