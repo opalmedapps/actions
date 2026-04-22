@@ -5,32 +5,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
-    // https://docs.renovatebot.com/presets-default/#separatemultiplemajorreleases
-    ":separateMultipleMajorReleases",
-    // set timezone to local one to ensure schedules are run
-    // https://docs.renovatebot.com/configuration-options/#timezone
-    ":timezone(America/Toronto)",
-    // https://docs.renovatebot.com/presets-helpers/#helperspingithubactiondigeststosemver
-    "helpers:pinGitHubActionDigestsToSemver",
-    // https://docs.renovatebot.com/presets-customManagers/#custommanagersgithubactionsversions
-    "customManagers:githubActionsVersions",
-    "github>mschoettle/renovate-presets//presets/pre-commit-hooks.json5",
+    // https://github.com/opalmedapps/.github/blob/main/base.renovate.json5
+    "github>opalmedapps/.github//base.renovate.json5",
   ],
   // https://docs.renovatebot.com/configuration-options/#assignees
-  "assignees": ["mschoettle"],
-  // https://docs.renovatebot.com/configuration-options/#labels
-  "labels": ["dependencies"],
-  // Add a dependency cooldown
-  // https://docs.renovatebot.com/key-concepts/minimum-release-age/#minimum-release-age
-  // https://blog.yossarian.net/2025/11/21/We-should-all-be-using-dependency-cooldowns
-  "minimumReleaseAge": "7 days",
-  "internalChecksFilter": "strict",
-  // Only rebase existing MRs when the branch is conflicted
-  // This avoids getting spammed by updates to existing PRs
-  //
-  // https://docs.renovatebot.com/configuration-options/#rebasewhen
-  "rebaseWhen": "conflicted",
+  "assignees": [],
   // No files are matched by default, see: https://docs.renovatebot.com/modules/manager/pep723/
   "pep723": {
     "managerFilePatterns": [
